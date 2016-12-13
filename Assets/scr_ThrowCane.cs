@@ -7,7 +7,6 @@ public class scr_ThrowCane : MonoBehaviour
     public Vector2 end;
     public float speed;
     public float timer;
-    public float attackTimer;
 
     public bool bl_hitback = false;
     bool bl_bounceOut = false;
@@ -25,7 +24,6 @@ public class scr_ThrowCane : MonoBehaviour
         if (bl_hitback && !bl_bounceOut)
         {
             GetComponent<Rigidbody2D>().velocity = -GetComponent<Rigidbody2D>().velocity;
-            timer = 0;
             Vector2 copyEnd = end;
             Vector2 copyStart = start;
 
@@ -34,10 +32,9 @@ public class scr_ThrowCane : MonoBehaviour
 
             bl_bounceOut = true;
         }
+        Destroy(this.gameObject, 8);
 
-        timer += Time.deltaTime;
-
-        if (timer >= 8.0f)
+        if (transform.position.y >= 130.7 || transform.position.x <= 17)
         {
             Destroy(gameObject);
         }
@@ -70,9 +67,9 @@ public class scr_ThrowCane : MonoBehaviour
             }
         }
 
-        if (coll.gameObject.layer == 11)
-        {
-            Destroy(gameObject);
-        }
+        //if (coll.gameObject.layer == 11)
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 }

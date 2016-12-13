@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class scr_Lobfather : MonoBehaviour
 {
@@ -37,13 +38,8 @@ public class scr_Lobfather : MonoBehaviour
     private int in_enemiesleft;
     private List<GameObject> GO_enemies;
     public GameObject GO_enemy;
-    public float fl_turnTimer;
     private bool bl_stopSpawning;
 
-    //Trample Phase
-    public float fl_tramplespeed;
-    public int in_numoftramples;
-    private int in_tramplescount;
     private bool bl_hit;
 
     STATE currState;
@@ -54,7 +50,6 @@ public class scr_Lobfather : MonoBehaviour
         in_canethrowcount = 0;
         in_skycanecount = 0;
         in_enemiesleft = in_enemiestospawn;
-        in_tramplescount = 0;
         bl_hit = false;
         fl_whentothrow = 0;
         bl_skycaneSpawned = false;
@@ -81,11 +76,13 @@ public class scr_Lobfather : MonoBehaviour
             case STATE.SUMMON:
                 SummonPhase();
                 break;
-            case STATE.TRAMPLE:
-                TramplePhase();
-                break;
             default:
                 break;
+        }
+
+        if (in_Health <= 0)
+        {
+            SceneManager.LoadScene("Credits");
         }
     }
 
@@ -93,7 +90,7 @@ public class scr_Lobfather : MonoBehaviour
     {
         transform.position = Vector2.MoveTowards(transform.position, V2_bossPosOn, fl_transSpeed);
 
-        if (transform.position.x <= 2.3)
+        if (transform.position.x <= V2_bossPosOn.x + 0.1f)
         {
             currState = STATE.CANETHROW;
         }
@@ -113,7 +110,7 @@ public class scr_Lobfather : MonoBehaviour
             in_canethrowcount += 1;
         }
 
-        if (in_canethrowcount >= in_numofCanestothrow && GameObject.Find("Throw Cane(Clone)") == null)
+        if (in_canethrowcount >= in_numofCanestothrow && GameObject.Find("CaneThrow(Clone)") == null)
         {
             transform.position = Vector2.MoveTowards(transform.position, V2_bossPosOff, fl_transSpeed);
 
@@ -178,15 +175,6 @@ public class scr_Lobfather : MonoBehaviour
             {
                 currState = STATE.CANETHROW;
             }
-        }
-    }
-
-    void TramplePhase()
-    {
-        if (in_tramplescount >= in_numoftramples)
-        {
-            in_tramplescount = 0;
-            currState = STATE.CANETHROW;
         }
     }
 

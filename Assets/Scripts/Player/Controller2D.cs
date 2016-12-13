@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [RequireComponent (typeof (BoxCollider2D))]
 
@@ -91,6 +92,8 @@ public class Controller2D : MonoBehaviour
     {
         float directionX = (dir) ? -1 : 1; 
         float rayLength = .50f;
+        if (SceneManager.GetActiveScene().name == "Level5")
+            rayLength = 1.0f;
         Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
         rayOrigin += Vector2.up * (horizontalRaySpacing);
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, enemyMask);

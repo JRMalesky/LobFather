@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class scr_enemyHealth : MonoBehaviour {
 
@@ -9,6 +10,8 @@ public class scr_enemyHealth : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        if (SceneManager.GetActiveScene().name == "Level5")
+            maxHealth = 3;
         currentHealth = maxHealth; 
 	}
 	
