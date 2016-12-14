@@ -19,8 +19,14 @@ public class SplashScreen : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-	    
-	}
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        if (sceneName != "Splash_Screen" && sceneName != "Main_Menu")
+        {
+            Destroy(this.gameObject);
+        }
+
+    }
     IEnumerator TransitionToMenu()
     {
         yield return new WaitForSeconds(5);

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class scr_clam : MonoBehaviour {
 
+    AudioSource audio;
     // Use this for initialization
     public GameObject pearl;
     float shotTimer;
@@ -13,6 +14,7 @@ public class scr_clam : MonoBehaviour {
         shotTimer = 0f;
         shotChecker = 3.0f;
         Player = GameObject.FindGameObjectWithTag("Player");
+        audio = GetComponent<AudioSource>();
 	}
 
     // Update is called once per frame
@@ -28,6 +30,7 @@ public class scr_clam : MonoBehaviour {
             {
                 if (!Player.GetComponent<Player>().bIsStealth)
                 {
+                    audio.Play();
                     GameObject Pearl = Instantiate(pearl, this.transform.position, Quaternion.identity) as GameObject;
                     Rigidbody2D rB = Pearl.GetComponent<Rigidbody2D>();
                     rB.AddForce((Player.transform.position - this.transform.position).normalized * 100);

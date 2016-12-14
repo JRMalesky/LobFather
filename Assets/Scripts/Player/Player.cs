@@ -31,10 +31,15 @@ public class Player : MonoBehaviour
     Animator anim; // animations
     SpriteRenderer spriteRend;
 
+    AudioSource audio;
+    public AudioClip inkShotAudio;
+    public AudioClip meleeAttackAudio;
+    public AudioClip jumpAudio; 
     // Use this for initialization
     void Start()
     {
         /// Get Components 
+        audio = GetComponent<AudioSource>();
         controller = GetComponent<Controller2D>();
         anim = GetComponent<Animator>();
         spriteRend = GetComponent<SpriteRenderer>();
@@ -72,10 +77,14 @@ public class Player : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && controller.collisions.below && !bDamageCooldown) // If player presses Jump button and is currently grounded
         {
+            audio.clip = jumpAudio;
+            audio.Play();
             velocity.y = jumpVelocity; // add jump velocity 
         }
         if(Input.GetMouseButtonDown(0) && bCanAttack)
         {
+            audio.clip = meleeAttackAudio;
+            audio.Play();
             controller.Attack(velocity, attackDamage, spriteRend.flipX);
             StartCoroutine(AttackCooldown(.5f));
         }
@@ -102,7 +111,8 @@ public class Player : MonoBehaviour
             Rigidbody2D rB = ink.GetComponent<Rigidbody2D>();
             float directionX = (spriteRend.flipX) ? -1 : 1;
             rB.AddForce((transform.right * directionX).normalized * 200);
-
+            audio.clip = inkShotAudio;
+            audio.Play();
             StartCoroutine("InkCooldown");
         }
     }
