@@ -43,9 +43,10 @@ public class scr_Lobfather : MonoBehaviour
     private bool bl_hit;
 
     STATE currState;
-
+    AudioSource audio;
     void Start()
     {
+        audio = GetComponent<AudioSource>();
         bl_onscreen = true;
         in_canethrowcount = 0;
         in_skycanecount = 0;
@@ -108,6 +109,7 @@ public class scr_Lobfather : MonoBehaviour
 
             fl_whentothrow = 0;
             in_canethrowcount += 1;
+            audio.Play();
         }
 
         if (in_canethrowcount >= in_numofCanestothrow && GameObject.Find("CaneThrow(Clone)") == null)
