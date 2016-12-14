@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private bool bDamageCooldown = false;
     private bool bCanAttack = true;
 
-    private float attackDamage = 10; 
-
+    private float attackDamage = 10;
+    private bool bInkCooldown = false; 
 
     Vector3 velocity;
     float velocityXSmoothing;
@@ -96,15 +96,23 @@ public class Player : MonoBehaviour
         }
 
         /// Ink Attack
-        if (Input.GetMouseButtonDown(1) && !bDamageCooldown)
+        if (Input.GetMouseButtonDown(1) && !bDamageCooldown && !bInkCooldown)
         {
             GameObject ink = (GameObject)Instantiate(InkSprite, transform.position, transform.rotation);
             Rigidbody2D rB = ink.GetComponent<Rigidbody2D>();
             float directionX = (spriteRend.flipX) ? -1 : 1;
             rB.AddForce((transform.right * directionX).normalized * 200);
+
+            StartCoroutine("InkCooldown");
         }
     }
 
+    IEnumerator InkCooldown()
+    {
+        bInkCooldown = true;
+        yield return new WaitForSeconds(2);
+        bInkCooldown = false; 
+    }
     public void TakeDamage(float dmg)
     {
         if(!bDamageCooldown)

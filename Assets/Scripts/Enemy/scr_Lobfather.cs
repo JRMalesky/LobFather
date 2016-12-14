@@ -82,7 +82,7 @@ public class scr_Lobfather : MonoBehaviour
 
         if (in_Health <= 0)
         {
-            SceneManager.LoadScene("Credits");
+            SceneManager.LoadScene("GameOver");
         }
     }
 
